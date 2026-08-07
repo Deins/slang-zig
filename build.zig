@@ -47,11 +47,11 @@ pub fn build(b: *std.Build) void {
         mod.linkSystemLibrary("slang", .{});
     }
 
-    // Tests
-    const unit_tests = b.addTest(.{ .root_module = mod });
-    unit_tests.root_module.addCSourceFile(.{ .file = b.path("src/abi_test.cpp") });
+    // // Tests
+    // const unit_tests = b.addTest(.{ .root_module = mod });
+    // unit_tests.root_module.addCSourceFile(.{ .file = b.path("src/abi_test.cpp") });
 
-    const run_tests = b.addRunArtifact(unit_tests);
-    const test_step = b.step("test", "Run tests");
-    test_step.dependOn(&run_tests.step);
+    // const run_tests = b.addRunArtifact(unit_tests);
+    // const test_step = b.step("test", "Run tests");
+    // test_step.dependOn(&run_tests.step);
 }

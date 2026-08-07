@@ -36,12 +36,12 @@
         },
         .@"slang-macos-aarch64" = .{
             .url = "https://github.com/shader-slang/slang/releases/download/v2025.19.1/slang-2025.19.1-macos-aarch64.tar.gz",
-            .hash = "FIXME",
+            .hash = "N-V-__8AAFIkKAB4ZN9_0UlAY5gNSdiKSkl0zIVqID4KNp9p",
             .lazy = true,
         },
         .@"slang-macos-x86_64" = .{
             .url = "https://github.com/shader-slang/slang/releases/download/v2025.19.1/slang-2025.19.1-macos-x86_64.tar.gz",
-            .hash = "FIXME",
+            .hash = "N-V-__8AAP8cNQJ8bje5FvpvZfFquoqwp5m61DFOeViCR81Z",
             .lazy = true,
         },
         .@"slang-windows-aarch64-debug-info" = .{
