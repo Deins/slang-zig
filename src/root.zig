@@ -2818,7 +2818,7 @@ pub const IComponentType = extern struct {
                 defer logDiagnostics(diagnostics, out_diagnostics);
                 const vtable: *const VTable = @ptrCast(self.vtable);
                 var linked_component_type: *IComponentType = undefined;
-                try vtable.linkWithOptions(@ptrCast(self), &linked_component_type, @intCast(compiler_option_entries.len), compiler_option_entries.ptr, diagnostics).check();
+                try vtable.linkWithOptions(@ptrCast(self), &linked_component_type, @intCast(compiler_option_entries.len), @constCast(compiler_option_entries.ptr), diagnostics).check();
                 return linked_component_type;
             }
 
