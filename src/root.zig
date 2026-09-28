@@ -3159,7 +3159,7 @@ pub const SpecializationArg = extern struct {
 };
 
 pub const API_VERSION = 0;
-pub const TAG_VERSION = "2025.19.1";
+pub const TAG_VERSION = "2026.18.3";
 
 pub const LanguageVersion = enum(i32) {
     unknown = 0,
