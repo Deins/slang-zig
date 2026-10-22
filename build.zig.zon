@@ -2,7 +2,7 @@
     .name = .slang_zig,
     .version = "0.0.0",
     .fingerprint = 0x31af0a0be1864101, // Changing this has security and trust implications.
-    .minimum_zig_version = "0.15.1",
+    .minimum_zig_version = "0.17.0",
     .dependencies = .{
         .@"slang-linux-aarch64-debug-info" = .{
             .url = "https://github.com/shader-slang/slang/releases/download/v2026.18.3/slang-2026.18.3-linux-aarch64-debug-info.tar.gz",

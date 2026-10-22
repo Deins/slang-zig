@@ -538,7 +538,7 @@ pub const CompilerOptionEntry = extern struct {
     fn makeEnumConstructor(comptime name: CompilerOptionName, comptime T: type) fn (T) CompilerOptionEntry {
         return struct {
             fn constructor(arg: T) CompilerOptionEntry {
-                return CompilerOptionEntry{ .name = name, .value = .{ .kind = .int, .int_value_0 = @intFromEnum(arg) } };
+                return CompilerOptionEntry{ .name = name, .value = .{ .kind = .int, .int_value_0 = @backingInt(arg) } };
             }
         }.constructor;
     }
@@ -636,21 +636,21 @@ pub const Result = enum(i32) {
     /// Use to test if a result was failure. Never use result != SLANG_OK to test for failure, as
     /// there may be successful codes != SLANG_OK.
     pub fn failed(self: Result) bool {
-        return @intFromEnum(self) < 0;
+        return @backingInt(self) < 0;
     }
 
     /// Use to test if a result succeeded. Never use result == SLANG_OK to test for success, as will
     /// detect other successful codes as a failure.
     pub fn succedded(self: Result) bool {
-        return @intFromEnum(self) >= 0;
+        return @backingInt(self) >= 0;
     }
 
     pub fn getFacility(self: Result) u15 {
-        return @intFromEnum(self) >> 16 & 0x7fff;
+        return @backingInt(self) >> 16 & 0x7fff;
     }
 
     pub fn getCode(self: Result) u16 {
-        return @intFromEnum(self) & 0xffff;
+        return @backingInt(self) & 0xffff;
     }
 
     pub fn check(self: Result) Error!void {
@@ -1570,7 +1570,7 @@ pub const BindingType = enum(u32) {
     mutable_raw_buffer = 0x106,
 
     pub fn isMutable(self: BindingType) bool {
-        return @intFromEnum(self) & mutable_flag != 0;
+        return @backingInt(self) & mutable_flag != 0;
     }
 
     const mutable_flag = 0x100;
