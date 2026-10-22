@@ -3527,7 +3527,7 @@ const FUNC_ITER_COUNT = 10_000;
 
 test "vtables and argument passing" {
     var seed: u64 = undefined;
-    try std.posix.getrandom(std.mem.asBytes(&seed));
+    std.testing.io.random(std.mem.asBytes(&seed));
     var rng = Rng.init(seed);
     // TODO: I think there is a way to print this only if the test failed
     std.log.info("Seed for this run was 0x{X}\n", .{seed});
@@ -3560,15 +3560,16 @@ fn testSlangVTable(comptime interface_name: []const u8, rng: *Rng) !void {
 }
 
 fn testSlangVTableImpl(vtable: anytype, this: anytype, type_name: []const u8, rng: *Rng) !void {
-    inline for (std.meta.fields(@TypeOf(vtable))) |field| {
-        switch (@typeInfo(field.type)) {
+    const fields = @typeInfo(@TypeOf(vtable)).@"struct";
+    inline for (fields.field_names, fields.field_types) |name, Field| {
+        switch (@typeInfo(Field)) {
             .@"struct" => {
-                const base_vtable = @field(vtable, field.name);
+                const base_vtable = @field(vtable, name);
                 try testSlangVTableImpl(base_vtable, this, type_name, rng);
             },
             .pointer => for (0..FUNC_ITER_COUNT) |_| {
-                const fn_ptr = @field(vtable, field.name);
-                try testSlangFunction(fn_ptr, @ptrCast(this), type_name, field.name, rng);
+                const fn_ptr = @field(vtable, name);
+                try testSlangFunction(fn_ptr, @ptrCast(this), type_name, name, rng);
             },
             else => unreachable,
         }
@@ -3588,7 +3589,7 @@ fn testSlangFunction(fn_ptr: anytype, this: *anyopaque, type_name: []const u8, f
     args[0] = @ptrCast(@alignCast(this));
     try zig_args.appendSliceBounded(std.mem.asBytes(&args[0]));
 
-    inline for (1..@typeInfo(F).@"fn".params.len) |i| {
+    inline for (1..@typeInfo(F).@"fn".param_types.len) |i| {
         rng.fill(std.mem.asBytes(&args[i]));
         try zig_args.appendSliceBounded(std.mem.asBytes(&args[i]));
     }
